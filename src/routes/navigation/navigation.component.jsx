@@ -11,15 +11,17 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectCurrentUser } from '../../store/user/user.selector'
 import { selectIsCartOpen } from '../../store/cart/cart.selector'
 import { setIsCartOpen } from '../../store/cart/cart.action'
+import { signOutStart } from '../../store/user/user.action'
 export const Navigation = () => {
     // const { currentUser, setCurrentUser } = useContext(UserContext)
     // const { isCartOpen } = useContext(CartContext)
     const isCartOpen = useSelector(selectIsCartOpen)
     const currentUser = useSelector(selectCurrentUser)
-    console.log(currentUser);
+    const dispatch = useDispatch()
+    // console.log(currentUser);
     const signOutHandler = async () => {
-        await signOutUser()
-
+        // await signOutUser()
+        dispatch(signOutStart())
     }
 
 

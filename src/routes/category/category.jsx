@@ -5,6 +5,7 @@ import { ProductsContext } from '../../components/contexts/products-context'
 import { ProductCard } from '../../components/product-card/product-card.comp'
 import { useSelector } from 'react-redux'
 import { selectProducts } from '../../store/categories/category.selector'
+import { Suspense } from '../../components/suspense/suspense'
 
 export const Category = () => {
     const { category } = useParams()
@@ -22,10 +23,7 @@ export const Category = () => {
 
                 {filteredProducts ? filteredProducts.map((product) => <ProductCard key={product.id} name={product.name}
                     price={product.price} imageUrl={product.imageUrl} />) :
-                    <div className="loading-container">
-                        <h1>Loading...</h1>
-                        <div className="loading-spinner"></div>
-                    </div>
+                    <Suspense />
                 }
             </div>
         </>

@@ -5,6 +5,9 @@ import "../sign-in.component/sign-in.styles.scss"
 import { Button } from '../button/button.component'
 import { UserContext } from '../contexts/user-context'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { onGoogleSignInStart } from '../../store/user/user.saga'
+import { emailSignInStart, googleSignInStart } from '../../store/user/user.action'
 
 const defaultFromFields = {
 
@@ -18,10 +21,11 @@ export const SignIn = () => {
     const { email, password } = formFields
     const navigate = useNavigate()
     const { currentUser, setCurrentUser } = useContext(UserContext)
-
+    const dispatch = useDispatch()
 
     const logGoogleUser = async () => {
-        await signInGooglePopup()
+        await dispatch(googleSignInStart())
+        // await signInGooglePopup()
         // setCurrentUser(user)
         // console.log(user);
         // await createUserDocFromAuth(user)
@@ -39,8 +43,8 @@ export const SignIn = () => {
         event.preventDefault()
 
         try {
-            const response = await signInUserWithEmailAndPass(email, password)
-
+            // const response = await signInUserWithEmailAndPass(email, password)
+            dispatch(emailSignInStart(email, password))
             // const { user } = response
             // setCurrentUser(user)
             redirectToHomePage()
