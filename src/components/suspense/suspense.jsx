@@ -1,11 +1,12 @@
 import React from 'react'
-import '../../components/suspense/suspense.scss'
+
+import { LoadingContainer, LoadingSpinner } from './suspense.styles'
 export const Suspense = () => {
     return (
 
-        <div className="loading-container">
+        <LoadingContainer>
             <h1>Loading...</h1>
-            <div className="loading-spinner"></div>
-        </div>
+            <LoadingSpinner></LoadingSpinner>
+        </LoadingContainer>
     )
 }

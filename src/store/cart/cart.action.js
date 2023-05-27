@@ -15,8 +15,15 @@ const addCartItem = (cartItems, productToAdd) => {
     }
 }
 
-const removeLastCartItem = (cartItems) => {
-    return cartItems.slice(0, -1)
+const removeCartItem = (cartItems, productToRemove) => {
+    const existingItemIndex = cartItems.findIndex(item => item.id === productToRemove.id)
+
+    if (existingItemIndex >= 0) {
+        const newCartItems = [...cartItems.slice(0, existingItemIndex), ...cartItems.slice(existingItemIndex + 1)]
+        return newCartItems
+    }
+
+    return cartItems
 }
 
 // export const totalPriceCartItems = (cartItems) => {
@@ -52,8 +59,8 @@ export const addItemToCart = (cartItems, productToAdd) => {
     const newCartItems = addCartItem(cartItems, productToAdd)
     return createAction(CART_TYPE_ACTIONS.SET_CART_ITEMS, newCartItems)
 }
-export const removeLastItemFromCart = (cartItems) => {
-    const newCartItems = removeLastCartItem(cartItems)
+export const removeItemFromCart = (cartItems, productToRemove) => {
+    const newCartItems = removeCartItem(cartItems, productToRemove)
     return createAction(CART_TYPE_ACTIONS.SET_CART_ITEMS, newCartItems)
 }
 export const itemDecrease = (cartItems, productToDecrease) => {

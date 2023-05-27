@@ -1,13 +1,15 @@
 import React, { useState, useContext } from 'react'
 import { createAuthUserWithEmailAndPass, createUserDocFromAuth, signInGooglePopup, signInUserWithEmailAndPass } from '../../util/firebase/firebase.utils'
 import { FormInput } from '../form-input/form-input.component'
-import "../sign-in.component/sign-in.styles.scss"
-import { Button } from '../button/button.component'
+import "./sign-in.styles.jsx"
+import { BUTTON_TYPE_CLASS, Button } from '../button/button.component'
 import { UserContext } from '../contexts/user-context'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { onGoogleSignInStart } from '../../store/user/user.saga'
 import { emailSignInStart, googleSignInStart } from '../../store/user/user.action'
+import { selectCurrentUser } from '../../store/user/user.selector'
+import { ButtonsContainer, SignInContainer } from './sign-in.styles.jsx'
 
 const defaultFromFields = {
 
@@ -20,16 +22,23 @@ export const SignIn = () => {
     const [formFields, setFormFields] = useState(defaultFromFields)
     const { email, password } = formFields
     const navigate = useNavigate()
-    const { currentUser, setCurrentUser } = useContext(UserContext)
+    // const { currentUser, setCurrentUser } = useContext(UserContext)
     const dispatch = useDispatch()
-
+    const currentUser = useSelector(selectCurrentUser)
     const logGoogleUser = async () => {
-        await dispatch(googleSignInStart())
+        try {
+            dispatch(googleSignInStart())
+            if (currentUser) {
+                redirectToHomePage()
+            }
+        } catch (error) {
+            console.log(error);
+        }
+
         // await signInGooglePopup()
         // setCurrentUser(user)
         // console.log(user);
         // await createUserDocFromAuth(user)
-        navigate("/")
 
     }
     const resetForm = () => {
@@ -69,7 +78,7 @@ export const SignIn = () => {
         setFormFields({ ...formFields, [name]: value })
     }
     return (
-        <div className='sign-in-container'>
+        <SignInContainer>
             <h2>Already have an account ?</h2>
             <span>Sign in with your email and password</span>
             <form onSubmit={handleSubmit}>
@@ -79,14 +88,14 @@ export const SignIn = () => {
 
                 <FormInput label="Password" type="password" required onChange={handleChange} name="password" value={password} />
 
-                <div className='buttons-container'>
+                <ButtonsContainer>
                     <Button type="submit" >Sign In</Button>
-                    <Button type='button' buttonType='google' onClick={logGoogleUser}>Google Sign In</Button>
-                </div>
+                    <Button type='button' buttonType={BUTTON_TYPE_CLASS.google} onClick={logGoogleUser}>Google Sign In</Button>
+                </ButtonsContainer>
 
 
             </form>
-        </div>
+        </SignInContainer>
     )
 }
 export default SignIn

@@ -3,15 +3,16 @@ import { auth, signInGooglePopup, createUserFromAuth, signInGoogleRedirect } fro
 import { getRedirectResult } from 'firebase/auth'
 import SignUp from '../../components/sign-up.component/sign-up.component'
 import SignIn from '../../components/sign-in.component/sign-in.component'
-import '../auth/auth.styles.scss'
+import { AuthContainer } from './auth.styles'
+
 export const Auth = () => {
 
 
     return (
-        <div className='auth-container'>
+        <AuthContainer>
             <SignIn />
             <SignUp />
-        </div>
+        </AuthContainer>
 
     )
 }

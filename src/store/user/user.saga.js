@@ -1,8 +1,10 @@
 import { takeLatest, put, all, call } from 'redux-saga/effects'
 
-import { signInSuccess, signInFail, signUpSuccess, signUpFail, signOutSuccess, signOutFail } from './user.action'
+import { signInSuccess, signInFail, signUpFail, signOutSuccess, signOutFail } from './user.reducer'
+
 import { USER_ACTION_TYPE } from './user.type'
 import { createAuthUserWithEmailAndPass, createUserDocFromAuth, getCurrentUser, signInGooglePopup, signInUserWithEmailAndPass, signOutUser } from '../../util/firebase/firebase.utils'
+import { signUpSuccess } from './user.reducer'
 
 
 export function* getDocFromUserAuth(userAuth, additionalInfo) {

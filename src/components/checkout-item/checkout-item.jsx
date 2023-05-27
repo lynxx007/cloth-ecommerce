@@ -1,27 +1,23 @@
 import React from 'react'
-import '../checkout-item/checkout-item.styles.scss' 	//importing classnames library 	//preferrably using css-in-js library
+import { Arrow, BaseSpan, CheckoutItemContainer, ImageContainer, Quantity, RemoveButton, Value } from './checkout-item.styles'
+//importing classnames library 	//preferrably using css-in-js library
 export const CheckoutItem = (props) => {
     const { id, img, name, desc, increase, decrease, price, qt, remove } = props
     return (
-        <div className='checkout-item-container'>
-
-            <div className='image-container'>
-
+        <CheckoutItemContainer>
+            <ImageContainer>
                 <img src={img} alt={name} />
-            </div>
-            <span className='name'>{name}</span>
-
-            <span className='quantity'>
-                <div onClick={decrease} className='arrow'>{`<`}</div>
-                <span className='value'>{qt}</span>
-                <div onClick={increase} className='arrow'>{`>`}</div>
-            </span>
-
-            <span className='price'>{price}</span>
-            <div onClick={remove} className='remove-button'>
+            </ImageContainer>
+            <BaseSpan>{name}</BaseSpan>
+            <Quantity>
+                <Arrow onClick={decrease}>&#10094;</Arrow>
+                <Value>{qt}</Value>
+                <Arrow onClick={increase}>&#10095;</Arrow>
+            </Quantity>
+            <BaseSpan className='price'>{price}</BaseSpan>
+            <RemoveButton onClick={remove}>
                 &#10005;
-            </div>
-        </div>
-
+            </RemoveButton>
+        </CheckoutItemContainer>
     )
 }

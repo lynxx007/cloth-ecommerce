@@ -1,11 +1,12 @@
 import React, { useContext, useState } from 'react'
 import { createAuthUserWithEmailAndPass, createUserDocFromAuth } from '../../util/firebase/firebase.utils'
 import { FormInput } from '../form-input/form-input.component'
-import "../sign-up.component/sign-up.styles.scss"
+import "./sign-up.styles.jsx"
 import { Button } from '../button/button.component'
 import { UserContext } from '../contexts/user-context'
 import { useDispatch } from 'react-redux'
 import { signUpStart } from '../../store/user/user.action'
+import { SignUpContainer } from './sign-up.styles.jsx'
 
 
 const defaultFromFields = {
@@ -49,7 +50,7 @@ export const SignUp = () => {
         setFormFields({ ...formFields, [name]: value })
     }
     return (
-        <div className='sign-up-container'>
+        <SignUpContainer>
             <h2>Dont have an account ?</h2>
             <span>Sign up with your email and password</span>
             <form onSubmit={handleSubmit}>
@@ -63,7 +64,7 @@ export const SignUp = () => {
 
                 <Button type="submit" >Sign Up</Button>
             </form>
-        </div>
+        </SignUpContainer>
     )
 }
 export default SignUp
