@@ -1,6 +1,6 @@
 import React from 'react'
 import './button.styles.jsx'
-import { BaseButton, GoogleSignInButton, InvertedButton } from './button.styles.jsx'
+import { BaseButton, GoogleSignInButton, InvertedButton, LoadingSpinner } from './button.styles.jsx'
 export const BUTTON_TYPE_CLASS = {
     base: 'base',
     google: 'google-sign-in',
@@ -16,12 +16,12 @@ const getButton = (buttonType = BUTTON_TYPE_CLASS.base) => ({
 )
 
 
-export const Button = ({ children, buttonType, ...otherProps }) => {
+export const Button = ({ children, buttonType, isLoading, ...otherProps }) => {
     const CustomButton = getButton(buttonType)
     return (
 
-        <CustomButton {...otherProps}>
-            {children}
+        <CustomButton disabled={isLoading} {...otherProps}>
+            {isLoading ? <LoadingSpinner /> : children}
         </CustomButton>
 
     )
