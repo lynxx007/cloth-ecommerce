@@ -1,40 +1,29 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.scss';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom'
-import { UserProvider } from './components/contexts/user-context';
-import { ProductProvider } from './components/contexts/products-context';
-import { CartProvider } from './components/contexts/cart-context';
-import { Provider } from 'react-redux'
-import { persistor, store } from './store/store';
+import { render } from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { Elements } from '@stripe/react-stripe-js'
-import { stripePromise } from './util/stripe/stripe';
+import { Elements } from '@stripe/react-stripe-js';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+import App from './App';
+import { store, persistor } from './store/store';
+import { stripePromise } from './utils/stripe/stripe.utils';
+
+import './index.scss';
+
+const rootElement = document.getElementById('root');
+
+render(
   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate persistor={persistor}>
+      <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
-          {/* <UserProvider> */}
-          {/* <ProductProvider> */}
-          {/* <CartProvider> */}
           <Elements stripe={stripePromise}>
             <App />
           </Elements>
-          {/* </CartProvider> */}
-          {/* </ProductProvider> */}
-          {/* </UserProvider> */}
         </BrowserRouter>
       </PersistGate>
     </Provider>
-  </React.StrictMode>
+  </React.StrictMode>,
+  rootElement
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

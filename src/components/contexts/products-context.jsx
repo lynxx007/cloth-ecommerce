@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from 'react'
 import SHOP_DATA from '../../shop-data.js'
-import { addCollectionAndDoc, getCategoriesAndDocs } from '../../util/firebase/firebase.utils.js'
+import { addCollectionAndDoc, getCategoriesAndDocs } from '../../util/firebase/firebase.utils.ts'
 export const ProductsContext = createContext({
     products: {},
 
@@ -18,6 +18,7 @@ export const ProductProvider = ({ children }) => {
         getCategoriesMap()
     }, [])
 
+    // Below is the code for add data to the firestore
     // useEffect(() => {
     //     addCollectionAndDoc('categories', SHOP_DATA)
     // }, [])
